@@ -303,7 +303,6 @@ footer h4 { font-size: 15px; color: #fff; font-family: var(--font-sarabun), sans
                  padding-top: 40px; padding-bottom: 40px; }
   .hero h1 { font-size: 25px; }
   .hero .img { flex: 0 0 auto; height: 210px; }
-  .pcard > .img { height: 230px; }
   .tcard > .img { height: 180px; }
   .band .wrapx { flex-direction: column; align-items: flex-start; gap: 22px;
                  padding-top: 44px; padding-bottom: 44px; }
@@ -334,5 +333,27 @@ footer h4 { font-size: 15px; color: #fff; font-family: var(--font-sarabun), sans
 }
 .ih-poster img, .ih-cover img {
   height: auto;
+  object-fit: contain;
+}
+
+/* ============ ภาพวงกลม hero หน้าแรก ============ */
+/* คอลลาจวงกลมลอยบนพื้นเขียวเข้มของ hero — ไม่มีกรอบ/พื้นสี่เหลี่ยม */
+.hero .img.hero-photo {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+.hero .img.hero-photo img {
+  object-fit: contain;
+}
+
+/* ============ การ์ดโปรโมชั่น: โชว์โปสเตอร์เต็มใบ ไม่ครอป ============ */
+/* กล่องเท่ากันทุกใบ (grid เรียบ) โปสเตอร์สัดส่วนไหนก็แสดงทั้งใบ ที่ว่างเป็นพื้นสีอ่อน */
+.pcard > .img {
+  height: auto;
+  aspect-ratio: 297 / 210; /* A4 แนวนอน — ให้พอดีกับโปสเตอร์ส่วนใหญ่ */
+  background: var(--teal-l);
+}
+.pcard > .img img {
   object-fit: contain;
 }

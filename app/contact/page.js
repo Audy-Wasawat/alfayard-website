@@ -2,7 +2,6 @@ import Image from "next/image";
 import PageHead from "@/components/PageHead";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import ImageBox from "@/components/ImageBox";
 import ContactForm from "@/components/ContactForm";
 import { Star } from "@/components/icons";
 import { getSiteSettings } from "@/lib/data";
@@ -22,7 +21,7 @@ export default async function ContactPage() {
     ["อีเมลบริษัท", s?.email || "[อีเมล]"],
     ["Facebook", s?.facebook_url || "[ชื่อเพจ]"],
     ["ที่อยู่สำนักงาน", s?.address || "[ที่อยู่บริษัทแบบเต็ม]"],
-    ["เวลาทำการ", s?.business_hours || "[วัน] เวลา [เวลา]"],
+    ["เวลาทำการ", s?.business_hours || "ทุกวัน เวลา 07.00 - 21.00 น."],
   ];
 
   return (
@@ -84,7 +83,18 @@ export default async function ContactPage() {
 
             <div className="col" style={{ gap: 12 }}>
               <h3 className="f20">แผนที่สำนักงาน</h3>
-              <ImageBox className="ih-map" label="แผนที่ (Google Maps)" />
+              <div className="ih-map" style={{ overflow: "hidden", border: "1px solid var(--line)" }}>
+                <iframe
+                  title="แผนที่สำนักงาน อัล ฟายาร์ด 1441"
+                  src="https://maps.google.com/maps?q=8.407917265656435, 98.64228967775978&z=17&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, display: "block" }}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+              </div>
             </div>
           </div>
         </div>

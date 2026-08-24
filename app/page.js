@@ -63,7 +63,10 @@ export default async function Home() {
               </span>
             </div>
           </div>
-          <ImageBox className="" label="ภาพหลัก — ผู้แสวงบุญ / มัสยิด" />
+          <div className="img hero-photo">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/hero.png" alt="ผู้แสวงบุญ ณ มักกะฮ์และมะดีนะฮ์" />
+          </div>
         </div>
       </section>
 
