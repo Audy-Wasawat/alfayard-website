@@ -1,6 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getSiteSettings } from "@/lib/data";
-import { Star } from "./icons";
 
 export default async function SiteFooter() {
   const s = await getSiteSettings();
@@ -12,9 +12,13 @@ export default async function SiteFooter() {
         <div className="fmain">
           <div className="col" style={{ gap: 14 }}>
             <div className="brand">
-              <div className="mark" style={{ background: "rgba(255,255,255,.08)" }}>
-                <Star size={22} color="#C0904F" />
-              </div>
+              <Image
+                src="/logo-symbol.png"
+                alt="โลโก้ อัล ฟายาร์ด 1441"
+                width={44}
+                height={44}
+                style={{ flexShrink: 0 }}
+              />
               <div>
                 <b style={{ color: "#fff" }}>อัล ฟายาร์ด 1441</b>
                 <span style={{ color: "rgba(255,255,255,.45)" }}>

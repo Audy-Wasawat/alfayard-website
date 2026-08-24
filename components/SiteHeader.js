@@ -1,6 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getSiteSettings } from "@/lib/data";
-import { Star } from "./icons";
 import Nav from "./Nav";
 
 export default async function SiteHeader() {
@@ -23,9 +23,14 @@ export default async function SiteHeader() {
       <header className="head">
         <div className="wrapx">
           <Link href="/" className="brand">
-            <div className="mark">
-              <Star size={24} color="#C0904F" />
-            </div>
+            <Image
+              src="/logo-symbol.png"
+              alt="โลโก้ อัล ฟายาร์ด 1441"
+              width={46}
+              height={46}
+              priority
+              style={{ flexShrink: 0 }}
+            />
             <div>
               <b>อัล ฟายาร์ด 1441</b>
               <span>AL FAYARD 1441 CO., LTD.</span>
