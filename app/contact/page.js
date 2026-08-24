@@ -60,7 +60,7 @@ export default async function ContactPage() {
                 เปิด LINE
               </a>
               <span className="mute sm" style={{ textAlign: "center" }}>
-                โดยปกติจะตอบกลับภายในไม่นาน ทักมาได้เลย
+                ทางเราจะตอบกลับโดยเร็ว
               </span>
             </div>
 

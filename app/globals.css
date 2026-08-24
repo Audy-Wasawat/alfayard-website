@@ -63,7 +63,7 @@ button { font: inherit; cursor: pointer; }
         border: 1px solid var(--line); color: var(--mute); font-size: 14.5px;
         border-radius: 2px; min-height: 44px; background: transparent; }
 .chip.on { border-color: var(--teal); background: var(--teal); color: #fff; }
-a.chip, button.chip { text-decoration: none; }
+a.chip, button.chip { text-decoration: none; cursor: pointer; font-family: inherit; text-align: left; }
 .sel { display: inline-flex; align-items: center; justify-content: space-between; gap: 14px;
        padding: 0 16px; min-height: 46px; border: 1px solid var(--line);
        color: var(--mute); font-size: 14.5px; background: #fff; border-radius: 2px; }
@@ -117,7 +117,9 @@ nav.mainnav a { color: var(--ink); white-space: nowrap; }
 nav.mainnav a.on { color: var(--teal); border-bottom: 2px solid var(--tan); padding-bottom: 4px; }
 .burger { display: none; width: 48px; height: 48px; border: 1px solid var(--line);
           align-items: center; justify-content: center; flex-shrink: 0; background: none; }
-.mobilenav { display: none; flex-direction: column; border-top: 1px solid var(--line); background: #fff; }
+.mobilenav { display: none; position: absolute; top: 100%; left: 0; right: 0;
+             flex-direction: column; border-top: 1px solid var(--line); background: #fff;
+             box-shadow: 0 12px 26px rgba(0,0,0,.10); z-index: 60; }
 .mobilenav.open { display: flex; }
 .mobilenav a { padding: 14px 20px; border-bottom: 1px solid var(--line); color: var(--ink); }
 .mobilenav a.on { color: var(--teal); font-weight: 600; }
