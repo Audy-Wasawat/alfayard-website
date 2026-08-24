@@ -320,3 +320,19 @@ footer h4 { font-size: 15px; color: #fff; font-family: var(--font-sarabun), sans
   .ih-map { height: 220px; } .ih-gal { height: 130px; }
 }
 .stackm { flex-wrap: wrap; }
+
+/* ============ รูปแบบเต็มสัดส่วน (ไม่ครอป) ============ */
+/* โปสเตอร์ในหน้าแพ็กเกจ + ภาพปกใหญ่ในหน้าผลงาน: แสดงทั้งรูปตามสัดส่วนจริง
+   (แนวนอน/แนวตั้ง/A4 ก็ได้) แทนที่จะถูกครอปให้เต็มกล่องความสูงคงที่
+   วางไว้ท้ายไฟล์เพื่อให้ชนะกฎความสูงคงที่ทุก breakpoint (รวม tablet/mobile)
+   ไม่แตะ .ih-gal (แกลเลอรีกริด) และการ์ดในหน้า list — พวกนั้นยังครอปเป็นตารางเท่ากันเหมือนเดิม */
+.ih-poster, .ih-cover {
+  height: auto;
+  min-height: 200px;
+  padding: 0;
+  background: transparent;
+}
+.ih-poster img, .ih-cover img {
+  height: auto;
+  object-fit: contain;
+}
