@@ -1,3 +1,4 @@
+import Image from "next/image";
 import PageHead from "@/components/PageHead";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -14,7 +15,7 @@ export const metadata = {
 
 export default async function ContactPage() {
   const s = await getSiteSettings();
-  const lineHref = s?.line_id ? `https://line.me/ti/p/~${s.line_id}` : "#";
+  const lineHref = "https://line.me/ti/p/HXIgSFkPrC";
 
   const rows = [
     ["โทรศัพท์", s?.phone || "[0X-XXX-XXXX]"],
@@ -44,7 +45,14 @@ export default async function ContactPage() {
               style={{ padding: 30, background: "var(--paper2)", alignItems: "center", gap: 16 }}
             >
               <h2 className="f23">คุยกับเราทาง LINE</h2>
-              <ImageBox label="QR Code" style={{ width: 180, height: 180 }} />
+              <div style={{ background: "#fff", padding: 8, borderRadius: 10 }}>
+                <Image
+                  src="/line-qr.png"
+                  alt="LINE QR Code อัล ฟายาร์ด 1441"
+                  width={172}
+                  height={172}
+                />
+              </div>
               <span className="f20" style={{ fontFamily: "var(--font-trirong)" }}>
                 @{s?.line_id || "[line-id]"}
               </span>
@@ -52,7 +60,7 @@ export default async function ContactPage() {
                 เปิด LINE
               </a>
               <span className="mute sm" style={{ textAlign: "center" }}>
-                ตอบกลับภายในเวลาทำการ {s?.business_hours || "[เวลา]"}
+                โดยปกติจะตอบกลับภายในไม่นาน ทักมาได้เลย
               </span>
             </div>
 

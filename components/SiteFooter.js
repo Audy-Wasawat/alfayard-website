@@ -13,10 +13,10 @@ export default async function SiteFooter() {
           <div className="col" style={{ gap: 14 }}>
             <div className="brand">
               <Image
-                src="/logo-symbol.png"
+                src="/logo-full.png"
                 alt="โลโก้ อัล ฟายาร์ด 1441"
-                width={44}
-                height={44}
+                width={48}
+                height={48}
                 style={{ flexShrink: 0 }}
               />
               <div>

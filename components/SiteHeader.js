@@ -24,10 +24,10 @@ export default async function SiteHeader() {
         <div className="wrapx">
           <Link href="/" className="brand">
             <Image
-              src="/logo-symbol.png"
+              src="/logo-full.png"
               alt="โลโก้ อัล ฟายาร์ด 1441"
-              width={46}
-              height={46}
+              width={48}
+              height={48}
               priority
               style={{ flexShrink: 0 }}
             />
