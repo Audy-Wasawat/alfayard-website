@@ -1,44 +1,72 @@
-# เว็บไซต์ อัล ฟายาร์ด 1441
+# Al Fayard Website — 1441
 
-เว็บไซต์บริษัทนำเที่ยวฮัจญ์/อุมเราะห์ สร้างด้วย Next.js (App Router) + Supabase
+> Official website for **Al Fayard**, a Hajj & Umrah travel company.  
+> Built with **Next.js** (App Router) + **Supabase**.
 
-## เริ่มพัฒนา (ในเครื่องตัวเอง)
+---
+
+## Getting Started (Local Development)
 
 ```bash
 npm install
-cp .env.local.example .env.local   # แล้วใส่ค่า Supabase URL/anon key จริง
+cp .env.local.example .env.local   # Fill in your Supabase URL and anon key
 npm run dev
 ```
 
-เปิด http://localhost:3000
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## โครงสร้างสำคัญ
+---
 
-- `app/` — หน้าเว็บทั้งหมด (Next.js App Router)
-- `components/` — ส่วนที่ใช้ซ้ำ (Header, Footer, การ์ดต่าง ๆ)
-- `lib/data.js` — ฟังก์ชันดึงข้อมูลจาก Supabase ทั้งหมด
-- `lib/images.js` — แปลง Google Drive file id เป็น URL รูปที่แสดงผลได้
-- `lib/supabase.js` — ตัวเชื่อมต่อ Supabase (ฝั่งเซิร์ฟเวอร์เท่านั้น)
+## Project Structure
 
-## ข้อมูลเว็บ
+| Path | Description |
+|---|---|
+| `app/` | All pages — Next.js App Router |
+| `components/` | Reusable UI components (Header, Footer, Cards, etc.) |
+| `lib/data.js` | All Supabase data-fetching functions |
+| `lib/images.js` | Converts Google Drive file IDs into renderable image URLs |
+| `lib/supabase.js` | Supabase client connector (server-side only) |
 
-เนื้อหาทั้งหมด (บริการ, โปรโมชั่น, ผลงาน, ทีมงาน, FAQ, ข้อมูลบริษัท) ดึงจาก Supabase
-โดยตรง แก้ไขได้ผ่าน Supabase Studio → Table Editor ไม่ต้องแก้โค้ดหรือ deploy ใหม่
-(เว็บอัปเดตข้อมูลเองภายใน 60 วินาทีตามการตั้งค่า `revalidate`)
+---
 
-ข้อความที่อยู่ในวงเล็บเหลี่ยม เช่น `[เดือน ๒๕๖๘]` หรือ `[ตำแหน่ง]` คือเนื้อหา placeholder
-ที่ยังไม่ได้ใส่ข้อมูลจริง — แก้ไขได้ที่ตาราง `promotions`, `portfolio_trips`,
-`team_members`, `site_settings` ใน Supabase Studio
+## Content Management
 
-รูปทั้งหมดมาจาก Google Drive ผ่านสคริปต์ sync แยกต่างหาก (ดูโฟลเดอร์ `drive-sync/`
-ในเครื่องที่ตั้งค่าไว้แล้ว) — เว็บนี้ไม่ต้องอัปโหลดรูปเอง
+All content — services, promotions, portfolio trips, team members, FAQs, and company info — is fetched directly from **Supabase**. No code changes or redeployments needed.
 
-## Deploy
+To update content, go to **Supabase Studio → Table Editor** and edit the relevant table. The website refreshes automatically within **60 seconds** based on the `revalidate` setting.
 
-1. Push โค้ดนี้ขึ้น GitHub repo ของตัวเอง
-2. เข้า https://vercel.com → New Project → Import จาก GitHub repo นี้
-3. ตั้งค่า Environment Variables ใน Vercel:
-   - `SUPABASE_URL`
-   - `SUPABASE_ANON_KEY`
-   (ดูค่าจริงในไฟล์ `.env.local` ที่ใช้ตอนพัฒนา — **อย่า commit ไฟล์นี้ขึ้น GitHub**)
-4. Deploy — เสร็จแล้วจะได้ URL ทดสอบจาก Vercel ก่อนค่อยผูกโดเมนจริงทีหลัง
+**Placeholder text** (e.g., `[Month 2568]` or `[Position]`) means the field has not been filled in yet. Update these in the following tables:
+
+- `promotions`
+- `portfolio_trips`
+- `team_members`
+- `site_settings`
+
+> **Images** are sourced from Google Drive via a separate sync script.  
+> See the `drive-sync/` folder on the configured machine. No manual image uploads are needed on this site.
+
+---
+
+## Deploying to Vercel
+
+1. Push this repository to your own GitHub repo.
+2. Go to [https://vercel.com](https://vercel.com) → **New Project** → Import from GitHub.
+3. Set the following **Environment Variables** in Vercel:
+
+   | Variable | Description |
+   |---|---|
+   | `SUPABASE_URL` | Your Supabase project URL |
+   | `SUPABASE_ANON_KEY` | Your Supabase anonymous (public) key |
+
+   > Copy these values from your local `.env.local` file.  
+   > **⚠️ Never commit `.env.local` to GitHub.**
+
+4. Click **Deploy**. Vercel will provide a preview URL — connect your custom domain afterwards.
+
+---
+
+## Tech Stack
+
+- [Next.js](https://nextjs.org/) — React framework with App Router
+- [Supabase](https://supabase.com/) — PostgreSQL database & API
+- [Vercel](https://vercel.com/) — Hosting & deployment
