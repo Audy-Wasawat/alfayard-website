@@ -4,13 +4,14 @@ import { driveImageUrl } from "@/lib/images";
 // ถ้าไม่มี (ยังไม่ได้ sync รูป) แสดงกล่องสีพื้นเป็น placeholder เหมือนตอนออกแบบ
 export default function ImageBox({
   driveId,
+  src: localSrc,
   width = 800,
   className = "",
   label = "รูป",
   eager = false,
   style,
 }) {
-  const src = driveImageUrl(driveId, width);
+  const src = localSrc || driveImageUrl(driveId, width);
   return (
     <div className={`img ${className}`} style={style}>
       {src ? (

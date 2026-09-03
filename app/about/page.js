@@ -50,11 +50,14 @@ export default async function AboutPage() {
                 ใบอนุญาตนำเที่ยวเลขที่ {settings?.license_number || "[เลขที่]"}
               </span>
               <span className="chip">
+                ใบอนุญาตฮัจญ์เลขที่ {settings?.hajj_license_number || "[เลขที่]"}
+              </span>
+              <span className="chip">
                 ก่อตั้งปี พ.ศ. {settings?.founding_year ? settings.founding_year + 543 : "[ปี]"}
               </span>
             </div>
           </div>
-          <ImageBox className="ih-lg" label="ภาพบริษัท / ทีมงาน" />
+          <ImageBox className="ih-lg" src="/about-team.jpg" label="ภาพบริษัท / ทีมงาน" eager />
         </div>
       </section>
 

@@ -9,6 +9,7 @@ export default function PromoCard({ promo }) {
         driveId={promo.poster_image_drive_id}
         width={500}
         label="โปสเตอร์ทริป"
+        eager
       />
       <div className="body">
         <div className="row wrap" style={{ gap: 8 }}>

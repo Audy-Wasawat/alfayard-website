@@ -59,7 +59,8 @@ export default async function Home() {
                 {settings?.license_number || "[เลขที่]"}
               </span>
               <span className="hchip">
-                <Star size={11} color="#C0904F" /> ทีมงานเดินทางไปด้วยทุกทริป
+                <Star size={11} color="#C0904F" /> ใบอนุญาตฮัจญ์เลขที่{" "}
+                {settings?.hajj_license_number || "[เลขที่]"}
               </span>
             </div>
           </div>
@@ -73,7 +74,7 @@ export default async function Home() {
       <section className="sec">
         <div className="wrapx">
           <div className="split rev">
-            <ImageBox className="ih-md" label="ภาพทีมงาน / บริษัท" />
+            <ImageBox className="ih-md" src="/about-team.jpg" label="ภาพทีมงาน / บริษัท" eager />
             <div className="col" style={{ gap: 18 }}>
               <span className="eyebrow">เกี่ยวกับเรา</span>
               <h2 className="f32">บริษัทเล็ก ๆ ที่ตั้งใจดูแลทุกคนให้ถึงที่หมาย</h2>

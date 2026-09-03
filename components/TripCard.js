@@ -9,6 +9,7 @@ export default function TripCard({ trip, photoCount }) {
         driveId={trip.cover_image_drive_id}
         width={450}
         label="ภาพปกทริป"
+        eager
       />
       <div className="body">
         <span className="pill" style={{ alignSelf: "flex-start" }}>

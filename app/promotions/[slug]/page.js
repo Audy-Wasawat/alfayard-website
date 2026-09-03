@@ -60,7 +60,7 @@ export default async function PromotionDetailPage({ params }) {
       </div>
 
       <section className="sec tight">
-        <div className="wrapx side">
+        <div className="wrapx side promo-detail">
           <div className="main col" style={{ gap: 14 }}>
             <ImageBox
               className="ih-poster"
@@ -147,6 +147,43 @@ export default async function PromotionDetailPage({ params }) {
                   โทร {settings?.phone || "[0X-XXX-XXXX]"}
                 </a>
               </div>
+              {(inclusions.length > 0 || exclusions.length > 0) && (
+                <details className="acc">
+                  <summary>รายละเอียดเพิ่มเติม</summary>
+                  <div className="acc-body col" style={{ gap: 18 }}>
+                    {inclusions.length > 0 && (
+                      <div className="col" style={{ gap: 10 }}>
+                        <span className="mute sm">สิ่งที่ได้รับ</span>
+                        <ul className="col" style={{ gap: 9 }}>
+                          {inclusions.map((x) => (
+                            <li className="ck" key={x}>
+                              <span className="m">
+                                <IconCheck />
+                              </span>
+                              <span>{x}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {exclusions.length > 0 && (
+                      <div className="col" style={{ gap: 10 }}>
+                        <span className="mute sm">สิ่งที่ไม่รวม</span>
+                        <ul className="col" style={{ gap: 9 }}>
+                          {exclusions.map((x) => (
+                            <li className="ck" key={x}>
+                              <span className="m">
+                                <IconCross />
+                              </span>
+                              <span>{x}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </details>
+              )}
               <p className="mute" style={{ fontSize: 13, textAlign: "center" }}>
                 เว็บไซต์ไม่มีระบบชำระเงิน — ทุกอย่างคุยและชำระผ่านแชทเหมือนเดิม
               </p>
@@ -154,49 +191,6 @@ export default async function PromotionDetailPage({ params }) {
           </aside>
         </div>
       </section>
-
-      {(inclusions.length > 0 || exclusions.length > 0) && (
-        <section className="sec alt">
-          <div className="wrapx">
-            <div className="shead" style={{ marginBottom: 28 }}>
-              <span className="eyebrow">รายละเอียด</span>
-              <h2>รายละเอียดแพ็กเกจ</h2>
-            </div>
-            <div className="g2">
-              <div className="card" style={{ padding: 26 }}>
-                <h3 className="f19" style={{ marginBottom: 14 }}>
-                  ราคานี้รวม
-                </h3>
-                <ul className="col" style={{ gap: 11 }}>
-                  {inclusions.map((x) => (
-                    <li className="ck" key={x}>
-                      <span className="m">
-                        <IconCheck />
-                      </span>
-                      <span>{x}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="card" style={{ padding: 26 }}>
-                <h3 className="f19" style={{ marginBottom: 14 }}>
-                  ราคานี้ไม่รวม
-                </h3>
-                <ul className="col" style={{ gap: 11 }}>
-                  {exclusions.map((x) => (
-                    <li className="ck" key={x}>
-                      <span className="m">
-                        <IconCross />
-                      </span>
-                      <span>{x}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
 
       {itinerary.length > 0 && (
         <section className="sec">

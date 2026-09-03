@@ -11,8 +11,10 @@ export default async function SiteHeader() {
       <div className="topbar">
         <div className="wrapx">
           <span>
-            ใบอนุญาตประกอบธุรกิจนำเที่ยวเลขที่{" "}
-            {s?.license_number || "[เลขที่ใบอนุญาต]"}
+            ใบอนุญาตนำเที่ยวเลขที่ {s?.license_number || "[เลขที่ใบอนุญาต]"}
+            {s?.hajj_license_number
+              ? ` · ใบอนุญาตฮัจญ์เลขที่ ${s.hajj_license_number}`
+              : ""}
           </span>
           <span>
             โทร {s?.phone || "[0X-XXX-XXXX]"} · LINE @

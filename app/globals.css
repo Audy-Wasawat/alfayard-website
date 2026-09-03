@@ -335,6 +335,49 @@ footer h4 { font-size: 15px; color: #fff; font-family: var(--font-sarabun), sans
   height: auto;
   object-fit: contain;
 }
+/* โปสเตอร์หน้ารายละเอียด: จำกัดขนาดไม่ให้ใหญ่เกินไป (แนวตั้งก็ไม่ล้น) จัดกึ่งกลาง */
+.ih-poster img {
+  width: auto;
+  max-width: 100%;
+  max-height: 520px;
+}
+
+/* หน้ารายละเอียดโปรโมชั่น: โปสเตอร์เต็มความกว้างคอลัมน์ (ไม่มีขอบข้าง ไม่ครอป)
+   คอลัมน์ซ้ายแคบพอให้โปสเตอร์แนวตั้งสูงกำลังดี ฝั่งขวา (รายละเอียด) ยืดเต็มที่เหลือ */
+.side.promo-detail { align-items: flex-start; }
+.side.promo-detail > .main { flex: 0 1 auto; width: 46%; max-width: 460px; min-width: 0; }
+.side.promo-detail > .aside { flex: 1 1 auto; width: auto; }
+.side.promo-detail .ih-poster { min-height: 0; }
+.side.promo-detail .ih-poster img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: none;
+  object-fit: contain;
+}
+@media (max-width: 640px) {
+  /* มือถือคอลัมน์เรียงลง — ให้ทั้งสองฝั่งเต็มความกว้าง */
+  .side.promo-detail > .main,
+  .side.promo-detail > .aside { width: 100%; max-width: none; }
+}
+
+/* ปุ่มกางรายละเอียดเพิ่มเติมในกล่องขวา (ใช้ <details>/<summary> ไม่ต้องใช้ JS) */
+.acc { border-top: 1px solid var(--line); padding-top: 14px; }
+.acc summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--teal-d);
+}
+.acc summary::-webkit-details-marker { display: none; }
+.acc summary::after { content: "▾"; transition: transform .2s; font-size: 12px; }
+.acc[open] summary::after { transform: rotate(180deg); }
+.acc-body { margin-top: 14px; }
 
 /* ============ ภาพวงกลม hero หน้าแรก ============ */
 /* คอลลาจวงกลมลอยบนพื้นเขียวเข้มของ hero — ไม่มีกรอบ/พื้นสี่เหลี่ยม */
@@ -351,7 +394,7 @@ footer h4 { font-size: 15px; color: #fff; font-family: var(--font-sarabun), sans
 /* กล่องเท่ากันทุกใบ (grid เรียบ) โปสเตอร์สัดส่วนไหนก็แสดงทั้งใบ ที่ว่างเป็นพื้นสีอ่อน */
 .pcard > .img {
   height: auto;
-  aspect-ratio: 297 / 210; /* A4 แนวนอน — ให้พอดีกับโปสเตอร์ส่วนใหญ่ */
+  aspect-ratio: 210 / 297; /* A4 แนวตั้ง — ให้พอดีกับโปสเตอร์ส่วนใหญ่ */
   background: var(--teal-l);
 }
 .pcard > .img img {

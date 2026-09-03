@@ -66,8 +66,10 @@ export default async function SiteFooter() {
         <div className="fbot">
           <span>© {thaiYear} บริษัท อัล ฟายาร์ด 1441 จำกัด</span>
           <span>
-            ใบอนุญาตประกอบธุรกิจนำเที่ยวเลขที่{" "}
-            {s?.license_number || "[เลขที่ใบอนุญาต]"}
+            ใบอนุญาตนำเที่ยวเลขที่ {s?.license_number || "[เลขที่ใบอนุญาต]"}
+            {s?.hajj_license_number
+              ? ` · ใบอนุญาตฮัจญ์เลขที่ ${s.hajj_license_number}`
+              : ""}
           </span>
         </div>
       </div>
