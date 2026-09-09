@@ -3,6 +3,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import Band from "@/components/Band";
 import ImageBox from "@/components/ImageBox";
+import GalleryGrid from "@/components/GalleryGrid";
 import TripCard from "@/components/TripCard";
 import { Crumb } from "@/components/PageHead";
 import { GRID_WIDTH } from "@/lib/images";
@@ -116,27 +117,9 @@ export default async function PortfolioDetailPage({ params }) {
               <span className="eyebrow">แกลเลอรี</span>
               <h2>ภาพบรรยากาศ</h2>
             </div>
-            <span className="mute sm">คลิกที่รูปเพื่อดูขนาดเต็ม</span>
           </div>
           {photos.length > 0 ? (
-            <>
-              <div className="gal">
-                {photos.map((p, i) => (
-                  <ImageBox
-                    key={p.id}
-                    className={i === 0 ? "big ih-gal" : "ih-gal"}
-                    driveId={p.drive_file_id}
-                    width={GRID_WIDTH}
-                    label={p.alt_text || "รูป"}
-                  />
-                ))}
-              </div>
-              <div className="col" style={{ alignItems: "center", gap: 12, marginTop: 30 }}>
-                <span className="mute" style={{ fontSize: 13, textAlign: "center" }}>
-                  รูปย่อโหลดแบบ lazy load · รูปเต็มโหลดเมื่อเปิดดูเท่านั้น
-                </span>
-              </div>
-            </>
+            <GalleryGrid photos={photos} />
           ) : (
             <p className="mute">ยังไม่มีรูปในทริปนี้ — จะซิงก์รูปจาก Google Drive เร็ว ๆ นี้</p>
           )}

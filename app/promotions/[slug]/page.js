@@ -35,7 +35,6 @@ export default async function PromotionDetailPage({ params }) {
   ]);
   if (!promo) notFound();
 
-  const gallery = Array.isArray(promo.gallery) ? promo.gallery : [];
   const inclusions = Array.isArray(promo.inclusions) ? promo.inclusions : [];
   const exclusions = Array.isArray(promo.exclusions) ? promo.exclusions : [];
   const itinerary = Array.isArray(promo.itinerary) ? promo.itinerary : [];
@@ -69,19 +68,6 @@ export default async function PromotionDetailPage({ params }) {
               label="โปสเตอร์ทริป (ภาพหลัก)"
               eager
             />
-            {gallery.length > 0 && (
-              <div className="row wrap" style={{ gap: 12 }}>
-                {gallery.slice(0, 4).map((g, i) => (
-                  <ImageBox
-                    key={g.drive_id || i}
-                    driveId={g.drive_id}
-                    width={220}
-                    label={g.alt || "รูป"}
-                    style={{ width: 104, height: 78, flexShrink: 0 }}
-                  />
-                ))}
-              </div>
-            )}
           </div>
 
           <aside className="aside card" style={{ padding: 26, background: "var(--paper2)" }}>
@@ -115,10 +101,21 @@ export default async function PromotionDetailPage({ params }) {
                   <span className="v">{promo.airline || "[สายการบิน]"}</span>
                 </div>
                 <div className="mrow">
-                  <span className="k">ที่พัก</span>
+                  <span className="k">ที่พัก มักกะห์</span>
                   <span className="v">
-                    {promo.hotel_name || "[ชื่อโรงแรม]"} · ระดับ{" "}
-                    {promo.hotel_stars || "[0]"} ดาว
+                    {promo.hotel_makkah_name || "[ชื่อโรงแรม]"}
+                    {promo.hotel_makkah_stars
+                      ? ` · ระดับ ${promo.hotel_makkah_stars} ดาว`
+                      : ""}
+                  </span>
+                </div>
+                <div className="mrow">
+                  <span className="k">ที่พัก มาดีนะห์</span>
+                  <span className="v">
+                    {promo.hotel_madinah_name || "[ชื่อโรงแรม]"}
+                    {promo.hotel_madinah_stars
+                      ? ` · ระดับ ${promo.hotel_madinah_stars} ดาว`
+                      : ""}
                   </span>
                 </div>
                 <div className="mrow">
@@ -132,7 +129,7 @@ export default async function PromotionDetailPage({ params }) {
                 className="col"
                 style={{ gap: 4, paddingTop: 12, borderTop: "1px solid var(--line)" }}
               >
-                <span className="mute sm">ราคาเริ่มต้น</span>
+                <span className="mute sm">ราคา</span>
                 <span className="price fprice">฿ {formatPrice(promo.price)}</span>
                 <span className="mute sm">{promo.price_note}</span>
               </div>
@@ -185,7 +182,7 @@ export default async function PromotionDetailPage({ params }) {
                 </details>
               )}
               <p className="mute" style={{ fontSize: 13, textAlign: "center" }}>
-                เว็บไซต์ไม่มีระบบชำระเงิน — ทุกอย่างคุยและชำระผ่านแชทเหมือนเดิม
+                ไม่มีระบบรับชำระเงินออนไลน์ — กรุณาติดต่อโดยตรงเพื่อสอบถามและดำเนินการจอง
               </p>
             </div>
           </aside>

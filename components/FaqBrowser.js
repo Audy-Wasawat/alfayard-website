@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { IconMinus, IconPlus } from "./icons";
 
 export default function FaqBrowser({ categories, faqs }) {
   const [active, setActive] = useState("all");
@@ -34,7 +33,7 @@ export default function FaqBrowser({ categories, faqs }) {
         </div>
       </aside>
 
-      <div className="main acc">
+      <div className="main faq-list">
         {shown.length === 0 ? (
           <p className="mute">ยังไม่มีคำถามในหมวดนี้</p>
         ) : (
@@ -42,12 +41,6 @@ export default function FaqBrowser({ categories, faqs }) {
             <details key={f.id} className="qa" open={i === 0}>
               <summary className="q">
                 <h3>{f.question}</h3>
-                <span className="ic-plus">
-                  <IconPlus />
-                </span>
-                <span className="ic-minus">
-                  <IconMinus />
-                </span>
               </summary>
               <div className="a">{f.answer}</div>
             </details>

@@ -103,7 +103,7 @@ export default async function ServicesPage() {
 
       {hajj && <ServiceBlock index={0} service={hajj} reversed={false} />}
 
-      <section className="sec">
+      <section className="sec" style={{ paddingTop: 24 }}>
         <div className="wrapx">
           <div className="shead" style={{ marginBottom: 32 }}>
             <span className="eyebrow">ขั้นตอน</span>

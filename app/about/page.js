@@ -52,9 +52,6 @@ export default async function AboutPage() {
               <span className="chip">
                 ใบอนุญาตฮัจญ์เลขที่ {settings?.hajj_license_number || "[เลขที่]"}
               </span>
-              <span className="chip">
-                ก่อตั้งปี พ.ศ. {settings?.founding_year ? settings.founding_year + 543 : "[ปี]"}
-              </span>
             </div>
           </div>
           <ImageBox className="ih-lg" src="/about-team.jpg" label="ภาพบริษัท / ทีมงาน" eager />
@@ -84,8 +81,8 @@ export default async function AboutPage() {
             style={{ alignItems: "center", textAlign: "center", marginBottom: 36 }}
           >
             <span className="eyebrow">ทีมงาน</span>
-            <h2>คนที่จะเดินทางไปกับคุณ</h2>
-            <p>ทีมงานชุดนี้คือคนที่ดูแลคุณตั้งแต่วันแรกที่ทักมาจนถึงวันกลับถึงบ้าน</p>
+            <h2>ทีมงานและผู้นำกลุ่ม</h2>
+            <p>คณะทีมงานและผู้นำกลุ่มในสังกัด อัล ฟายาร์ด 1441 ที่ร่วมดูแลผู้เดินทางในแต่ละทริป</p>
           </div>
           <div className="g4">
             {team.map((m) => (
@@ -94,7 +91,7 @@ export default async function AboutPage() {
                   driveId={m.photo_drive_id}
                   width={220}
                   label="รูป"
-                  style={{ width: 104, height: 104, borderRadius: "50%" }}
+                  style={{ width: 120, height: 160 }}
                 />
                 <h3>{m.name}</h3>
                 <span className="mute sm">{m.position}</span>

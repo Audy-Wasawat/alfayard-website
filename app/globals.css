@@ -24,8 +24,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 button { font: inherit; cursor: pointer; }
 
 .wrapx { max-width: 1152px; margin: 0 auto; padding: 0 40px; }
-.sec { padding: 84px 0; }
-.sec.tight { padding: 56px 0; }
+.sec { padding: 60px 0; }
+.sec.tight { padding: 40px 0; }
 .alt { background: var(--paper2); }
 .col { display: flex; flex-direction: column; }
 .row { display: flex; align-items: center; }
@@ -78,7 +78,7 @@ a.chip, button.chip { text-decoration: none; cursor: pointer; font-family: inher
 .g3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 26px; }
 .g4 { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 26px; }
 .gal { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; }
-.gal .big { grid-column: span 2; grid-row: span 2; height: auto; }
+.gal .big { grid-column: span 2; grid-row: span 2; }
 .split { display: flex; flex-direction: row; gap: 52px; align-items: center; }
 .split > * { flex: 1 1 0; min-width: 0; }
 .split.top { align-items: flex-start; }
@@ -196,24 +196,26 @@ nav.mainnav a.on { color: var(--teal); border-bottom: 2px solid var(--tan); padd
 
 /* accordion */
 .acc { display: flex; flex-direction: column; gap: 12px; }
+.faq-list { display: flex; flex-direction: column; gap: 12px; }
 .qa { border: 1px solid var(--line); background: #fff; }
 .qa .q { display: flex; align-items: center; justify-content: space-between; gap: 18px;
          padding: 18px 22px; width: 100%; text-align: left; border: none; background: none; }
 .qa .q h3 { font-size: 18px; }
 .qa summary.q { list-style: none; cursor: pointer; }
 .qa summary.q::-webkit-details-marker { display: none; }
-.qa .ic-plus { display: flex; }
-.qa .ic-minus { display: none; }
-.qa[open] .ic-plus { display: none; }
-.qa[open] .ic-minus { display: flex; }
+.qa summary.q::after { content: ""; width: 9px; height: 9px; flex-shrink: 0;
+         border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal);
+         transform: translateY(-2px) rotate(45deg); transition: transform .2s ease; }
+.qa[open] summary.q::after { transform: translateY(2px) rotate(225deg); }
 .qa[open] .q, .qa.open .q { background: var(--paper2); }
 .qa .a { padding: 18px 22px; border-top: 1px solid var(--line); color: var(--mute);
          font-size: 15.5px; }
 
 /* team */
-.person { padding: 26px 20px; display: flex; flex-direction: column;
+.person { padding: 32px 16px; display: flex; flex-direction: column;
           align-items: center; gap: 12px; text-align: center; }
-.person .img { width: 104px; height: 104px; border-radius: 50%; }
+.person .img { width: 120px; height: 160px; padding: 5px; overflow: hidden; border: none; }
+.person .img img { object-position: top center; }
 .person h3 { font-size: 18px; }
 
 /* form */
@@ -252,8 +254,8 @@ footer h4 { font-size: 15px; color: #fff; font-family: var(--font-sarabun), sans
 /* ============ TABLET ============ */
 @media (max-width: 1024px) {
   .wrapx { padding: 0 32px; }
-  .sec { padding: 62px 0; }
-  .sec.tight { padding: 44px 0; }
+  .sec { padding: 44px 0; }
+  .sec.tight { padding: 32px 0; }
   nav.mainnav, .head .btn { display: none; }
   .burger { display: flex; }
   .g3, .g4 { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 22px; }
@@ -282,8 +284,8 @@ footer h4 { font-size: 15px; color: #fff; font-family: var(--font-sarabun), sans
 @media (max-width: 640px) {
   body { font-size: 15px; }
   .wrapx { padding: 0 20px; }
-  .sec { padding: 44px 0; }
-  .sec.tight { padding: 32px 0; }
+  .sec { padding: 32px 0; }
+  .sec.tight { padding: 24px 0; }
   .g2, .g3, .g4 { grid-template-columns: minmax(0,1fr); gap: 18px; }
   .gal { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
   .gal .big { grid-column: span 2; grid-row: span 1; }
@@ -340,6 +342,19 @@ footer h4 { font-size: 15px; color: #fff; font-family: var(--font-sarabun), sans
   width: auto;
   max-width: 100%;
   max-height: 520px;
+}
+
+/* รูปประกอบหน้า Services: แสดงเต็มสัดส่วน 16:9 ไม่ครอป
+   วางไว้หลัง ih-poster/ih-cover เพื่อให้ชนะกฎความสูงคงที่ทุก breakpoint */
+.ih-svc {
+  height: auto;
+  aspect-ratio: 16 / 9;
+  min-height: 0;
+  background: transparent;
+}
+.ih-svc img {
+  height: auto;
+  object-fit: contain;
 }
 
 /* หน้ารายละเอียดโปรโมชั่น: โปสเตอร์เต็มความกว้างคอลัมน์ (ไม่มีขอบข้าง ไม่ครอป)
