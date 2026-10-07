@@ -5,15 +5,16 @@ import Band from "@/components/Band";
 import ImageBox from "@/components/ImageBox";
 import GalleryGrid from "@/components/GalleryGrid";
 import TripCard from "@/components/TripCard";
-import { Crumb } from "@/components/PageHead";
-import { GRID_WIDTH } from "@/lib/images";
+import { CrumbBar } from "@/components/PageHead";
+import { Star, IconCalendar, IconPin, IconUsers, IconImage } from "@/components/icons";
 import {
   getPortfolioTripBySlug,
   getPortfolioPhotos,
   getPortfolioTrips,
-  formatThaiDate,
+  formatThaiDateRange,
   toThaiYear,
   typeLabel,
+  clean,
 } from "@/lib/data";
 
 export const revalidate = 60;
@@ -22,7 +23,10 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const trip = await getPortfolioTripBySlug(slug);
   if (!trip) return {};
-  return { title: `${trip.name} | อัล ฟายาร์ด 1441` };
+  return {
+    title: `${trip.name} | อัล ฟายาร์ด 1441`,
+    openGraph: { title: `${trip.name} | อัล ฟายาร์ด 1441` },
+  };
 }
 
 export default async function PortfolioDetailPage({ params }) {
@@ -37,91 +41,76 @@ export default async function PortfolioDetailPage({ params }) {
   const others = allTrips.filter((t) => t.id !== trip.id).slice(0, 3);
   const cover = photos.find((p) => p.is_cover) || null;
 
+  // แสดงเฉพาะข้อมูลที่กรอกแล้ว
+  const facts = [
+    [IconCalendar, "วันที่เดินทาง", formatThaiDateRange(trip.trip_date_start, trip.trip_date_end)],
+    [IconPin, "สถานที่", clean(trip.location) || "มักกะฮ์ · มะดีนะฮ์"],
+    [IconUsers, "จำนวนผู้เดินทาง", trip.traveler_count ? `${trip.traveler_count} ท่าน` : null],
+    [IconImage, "จำนวนรูป", photos.length > 0 ? `${photos.length} รูป` : null],
+  ].filter(([, , v]) => v);
+
   return (
     <>
       <SiteHeader />
-      <div
-        className="wrapx"
-        style={{ paddingTop: 18, paddingBottom: 18, borderBottom: "1px solid var(--line)" }}
-      >
-        <Crumb
-          parts={[
-            { label: "หน้าแรก", href: "/" },
-            { label: "ผลงานที่ผ่านมา", href: "/portfolio" },
-            { label: trip.name },
-          ]}
-        />
-      </div>
+      <CrumbBar
+        parts={[
+          { label: "หน้าแรก", href: "/" },
+          { label: "ผลงานที่ผ่านมา", href: "/portfolio" },
+          { label: trip.name },
+        ]}
+      />
 
       <section className="sec tight">
         <div className="wrapx col" style={{ gap: 22 }}>
-          <div className="row wrap" style={{ gap: 10 }}>
-            <span className="pill">{typeLabel(trip.type)}</span>
+          <div className="row wrap" style={{ gap: 8 }}>
+            <span className="pill gold">{typeLabel(trip.type)}</span>
             <span className="pill">ปี {toThaiYear(trip.year)}</span>
           </div>
           <h1 className="f40">{trip.name}</h1>
-          <div
-            className="row wrap"
-            style={{
-              gap: "20px 48px",
-              padding: "20px 0",
-              borderTop: "1px solid var(--line)",
-              borderBottom: "1px solid var(--line)",
-            }}
-          >
-            <div className="col" style={{ gap: 2 }}>
-              <span className="mute sm">วันที่เดินทาง</span>
-              <span>
-                {trip.trip_date_start
-                  ? `${formatThaiDate(trip.trip_date_start)}${
-                      trip.trip_date_end ? ` – ${formatThaiDate(trip.trip_date_end)}` : ""
-                    }`
-                  : "[วันที่] – [วันที่]"}
-              </span>
+          {facts.length > 0 && (
+            <div className="row wrap" style={{ gap: "16px 40px" }}>
+              {facts.map(([Ic, k, v]) => (
+                <div className="row" style={{ gap: 12 }} key={k}>
+                  <span className="icon-badge sm"><Ic w={18} /></span>
+                  <div className="col" style={{ gap: 0 }}>
+                    <span className="mute sm">{k}</span>
+                    <span style={{ fontWeight: 600 }}>{v}</span>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="col" style={{ gap: 2 }}>
-              <span className="mute sm">สถานที่</span>
-              <span>{trip.location || "มักกะฮ์ · มะดีนะฮ์"}</span>
-            </div>
-            <div className="col" style={{ gap: 2 }}>
-              <span className="mute sm">จำนวนผู้เดินทาง</span>
-              <span>{trip.traveler_count ? `${trip.traveler_count} ท่าน` : "[00] ท่าน"}</span>
-            </div>
-            <div className="col" style={{ gap: 2 }}>
-              <span className="mute sm">จำนวนรูป</span>
-              <span>{photos.length > 0 ? `${photos.length} รูป` : "[00] รูป"}</span>
-            </div>
-          </div>
-          <p className="mute" style={{ maxWidth: "52em" }}>
-            {trip.description ||
-              `ทริปนี้เดินทางช่วง [ช่วงเวลา] มีผู้ร่วมเดินทาง [00] ท่าน เข้าพักที่ [ชื่อโรงแรม]
-              ซึ่งอยู่ในระยะเดินถึงมัสยิด บรรยากาศตลอดทริปเป็นไปด้วยดี ทีมงานเดินทางไปกับกลุ่มตลอดการเดินทาง`}
-          </p>
-          <ImageBox
-            className="ih-cover"
-            driveId={trip.cover_image_drive_id || cover?.drive_file_id}
-            width={1200}
-            label="ภาพปกทริป (ขนาดใหญ่)"
-            eager
-          />
+          )}
+          {clean(trip.description) && (
+            <p className="mute" style={{ maxWidth: "52em", fontSize: 17 }}>
+              {trip.description}
+            </p>
+          )}
+          {(trip.cover_image_drive_id || cover?.drive_file_id) && (
+            <ImageBox
+              className="ih-cover"
+              driveId={trip.cover_image_drive_id || cover?.drive_file_id}
+              width={1600}
+              label={`ภาพปก ${trip.name}`}
+              eager
+              style={{ marginTop: 8 }}
+            />
+          )}
         </div>
       </section>
 
       <section className="sec alt">
         <div className="wrapx">
-          <div
-            className="row between stackm"
-            style={{ alignItems: "flex-end", gap: 20, marginBottom: 28 }}
-          >
+          <div className="sec-top">
             <div className="shead">
-              <span className="eyebrow">แกลเลอรี</span>
+              <span className="eyebrow"><Star size={11} /> แกลเลอรี</span>
               <h2>ภาพบรรยากาศ</h2>
+              {photos.length > 0 && <p>แตะที่รูปเพื่อดูขนาดใหญ่และเลื่อนดูรูปถัดไป</p>}
             </div>
           </div>
           {photos.length > 0 ? (
-            <GalleryGrid photos={photos} />
+            <GalleryGrid photos={photos} tripName={trip.name} />
           ) : (
-            <p className="mute">ยังไม่มีรูปในทริปนี้ — จะซิงก์รูปจาก Google Drive เร็ว ๆ นี้</p>
+            <p className="mute">ยังไม่มีรูปในทริปนี้ จะทยอยเพิ่มเร็ว ๆ นี้</p>
           )}
         </div>
       </section>
@@ -129,9 +118,10 @@ export default async function PortfolioDetailPage({ params }) {
       {others.length > 0 && (
         <section className="sec">
           <div className="wrapx">
-            <h2 className="f26" style={{ marginBottom: 26 }}>
-              ทริปอื่นที่ผ่านมา
-            </h2>
+            <div className="shead" style={{ marginBottom: 24 }}>
+              <span className="eyebrow"><Star size={11} /> ผลงานอื่น</span>
+              <h2>ทริปอื่นที่ผ่านมา</h2>
+            </div>
             <div className="g3">
               {others.map((t) => (
                 <TripCard trip={t} key={t.id} />
@@ -142,6 +132,7 @@ export default async function PortfolioDetailPage({ params }) {
       )}
 
       <Band
+        alt={others.length === 0}
         title="อยากร่วมเดินทางกับเราครั้งหน้า?"
         lead="ดูรอบที่กำลังเปิดรับสมัครได้เลย"
         btnLabel="ดูโปรโมชั่นปัจจุบัน"

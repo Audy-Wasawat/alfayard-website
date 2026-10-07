@@ -22,6 +22,14 @@ npm run dev
 
 Open http://localhost:3000
 
+To preview on a phone on the same Wi-Fi, open `http://<your-PC-IPv4>:3000`
+(the `Network:` line printed by `npm run dev`, or `ipconfig`). If the page loads
+but menus and the photo viewer don't respond, add the IP to `next.config.mjs`:
+
+```js
+const nextConfig = { allowedDevOrigins: ["192.168.x.x"] };
+```
+
 `.env.local` needs:
 
 | Variable | Description |
@@ -44,12 +52,14 @@ Open http://localhost:3000
 | `app/portfolio/` | Portfolio list + `[slug]` trip detail page |
 | `app/faq/page.js` | FAQ |
 | `app/contact/page.js` | Contact (+ `actions.js` server action) |
-| `app/layout.js` | Root layout — fonts, metadata, favicon |
+| `app/layout.js` | Root layout — fonts, metadata, Open Graph (link previews), favicon |
+| `app/not-found.js` | 404 page |
 | `app/globals.css` | The entire design system (colors, layout, responsive) |
-| `components/` | Reusable pieces: `SiteHeader`, `Nav`, `SiteFooter`, `PromoCard`, `TripCard`, `ImageBox`, `ContactForm`, `FaqBrowser`, `PageHead`, `Band`, `icons` |
+| `components/` | Reusable pieces: `SiteHeader`, `Nav`, `SiteFooter`, `LineFab` (floating LINE button), `PromoCard`, `TripCard`, `ImageBox`, `GalleryGrid` (gallery + lightbox), `ContactForm`, `FaqBrowser`, `PageHead`, `Band`, `icons` |
 | `lib/data.js` | All Supabase data-fetching functions + formatting helpers |
 | `lib/supabase.js` | Supabase server client (revalidates every 60s) |
-| `lib/images.js` | Turns a Google Drive file ID into a thumbnail URL |
+| `lib/images.js` | Turns a Google Drive file ID into an image URL (via `/api/img`) |
+| `lib/site.js` | Shared contact links — the LINE link used by every LINE button, `tel:` / `mailto:` helpers |
 | `public/` | Static assets: logos, favicon, LINE QR, `about-team.jpg`, `hero.png` |
 
 Each page (`page.js`) assembles reusable components from `components/` plus its own
@@ -75,13 +85,20 @@ Key `site_settings` fields:
 | `history_text` | About-page company story |
 | `phone` · `email` · `line_id` · `address` | Contact details |
 
-Placeholder text in square brackets (e.g. `[ปี]`, `[ตำแหน่ง]`) means that field is
-still empty — fill it in the matching table.
+Empty fields are simply hidden on the site (e.g. a trip with no `traveler_count`
+won't show that row), so nothing half-filled shows up publicly. Fill them in the
+matching table whenever the info is ready.
+
+Promotions are sorted with open ones first; `status = closed` shows a "ปิดรับแล้ว"
+badge. If every promotion is closed, the home page heading switches from
+"โปรโมชั่นที่เปิดรับสมัคร" to "โปรโมชั่นล่าสุด" automatically.
 
 **2. Fixed wording & layout → edit the code, then push.**
 Page headings, section labels, button text, and styling are in the `.js`
 files (per-page content in `app/<page>/page.js`, shared parts in `components/`,
-styling in `app/globals.css`). In VS Code, `Ctrl+Shift+F` searches all files for the
+styling in `app/globals.css` — brand colors are the variables at the top under
+`:root`). The LINE link for every button on the site is set once in `lib/site.js`.
+In VS Code, `Ctrl+Shift+F` searches all files for the
 exact text to find where it lives.
 
 ---
@@ -181,4 +198,5 @@ git push
 ```
 
 Environment variables (`SUPABASE_URL`, `SUPABASE_ANON_KEY`) are already configured in
-the Vercel project settings. A custom domain can be attached in Vercel when ready.
+the Vercel project settings. A custom domain can be attached in Vercel when ready —
+when you do, also update `SITE_URL` in `app/layout.js` so link previews use the new domain.

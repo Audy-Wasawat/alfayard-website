@@ -4,7 +4,9 @@ import SiteFooter from "@/components/SiteFooter";
 import Band from "@/components/Band";
 import PageHead from "@/components/PageHead";
 import ImageBox from "@/components/ImageBox";
-import { IconCheck } from "@/components/icons";
+import { IconCheck, IconArrow, Star, IconKaaba, IconMosque, IconDoc } from "@/components/icons";
+
+const SERVICE_ICON = { hajj: IconKaaba, umrah: IconMosque, visa: IconDoc };
 import { getServices } from "@/lib/data";
 
 export const revalidate = 60;
@@ -20,44 +22,44 @@ const STEPS = [
   ["ออกเดินทาง", "เจอกันที่สนามบิน ทีมงานเดินทางไปพร้อมกลุ่มและดูแลจนกลับถึงบ้าน"],
 ];
 
-function ServiceBlock({ index, service, reversed }) {
+function ServiceBlock({ n, service, reversed, alt = false }) {
   const includes = Array.isArray(service.includes) ? service.includes : [];
   const image = (
     <ImageBox
       className="ih-svc"
       driveId={service.image_drive_id}
-      width={700}
-      label="ภาพประกอบบริการ"
+      width={900}
+      label={`ภาพประกอบบริการ${service.title}`}
     />
   );
   return (
-    <section className={`sec${index % 2 === 1 ? " alt" : ""}`} id={service.slug}>
+    <section className={`sec${alt ? " alt" : ""}`} id={service.slug}>
       <div className="wrapx">
-        <div className={`split top${reversed ? " rev" : ""}`} style={{ marginBottom: 0 }}>
+        <div className={`split${reversed ? " rev" : ""}`}>
           {reversed ? null : image}
           <div className="col" style={{ gap: 16 }}>
-            <span className="eyebrow">บริการที่ {index + 1}</span>
+            <span className="eyebrow"><Star size={11} /> บริการที่ {n}</span>
             <h2 className="f32">{service.title}</h2>
             <p className="mute">{service.lead}</p>
             <h3 className="f18" style={{ paddingTop: 6 }}>
               สิ่งที่รวมในบริการ
             </h3>
-            <ul className="g2" style={{ gap: "11px 24px" }}>
-              {includes.map((x) => (
-                <li className="ck" key={x}>
-                  <span className="m">
-                    <IconCheck />
-                  </span>
-                  <span>{x}</span>
-                </li>
-              ))}
-            </ul>
+            {includes.length > 0 && (
+              <ul className="g2" style={{ gap: "12px 24px" }}>
+                {includes.map((x) => (
+                  <li className="ck" key={x}>
+                    <span className="m"><IconCheck /></span>
+                    <span>{x}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
             <Link
               href={service.slug === "visa" ? "/contact" : "/promotions"}
-              className="btn out"
-              style={{ alignSelf: "flex-start", marginTop: 6 }}
+              className="btn solid"
+              style={{ alignSelf: "flex-start", marginTop: 8 }}
             >
-              {service.cta_label || "สอบถามเพิ่มเติม"}
+              {service.cta_label || "สอบถามเพิ่มเติม"} <IconArrow />
             </Link>
           </div>
           {reversed ? image : null}
@@ -85,32 +87,31 @@ export default async function ServicesPage() {
         lead="เราให้บริการสามอย่าง — ฮัจญ์ อุมเราะห์ และยื่นวีซ่าอุมเราะห์สำหรับผู้ที่เดินทางเอง ทุกบริการดูแลตั้งแต่เตรียมเอกสารจนกลับถึงบ้าน"
       />
 
-      <div
-        className="wrapx row wrap"
-        style={{
-          gap: 10,
-          paddingTop: 20,
-          paddingBottom: 20,
-          borderBottom: "1px solid var(--line)",
-        }}
-      >
-        {services.map((s) => (
-          <a key={s.id} href={`#${s.slug}`} className="chip">
-            {s.title}
-          </a>
-        ))}
+      <div style={{ borderBottom: "1px solid var(--line)", background: "#fff" }}>
+        <div className="wrapx" style={{ paddingTop: 16, paddingBottom: 16 }}>
+          <div className="chips scroll">
+          {[hajj, umrah, visa].filter(Boolean).map((s) => {
+            const Ic = SERVICE_ICON[s.slug] || IconKaaba;
+            return (
+              <a key={s.id} href={`#${s.slug}`} className="chip">
+                <Ic w={18} /> {s.title}
+              </a>
+            );
+          })}
+          </div>
+        </div>
       </div>
 
-      {hajj && <ServiceBlock index={0} service={hajj} reversed={false} />}
+      {hajj && <ServiceBlock n={1} service={hajj} reversed={false} />}
 
-      <section className="sec" style={{ paddingTop: 24 }}>
+      <section className="sec alt">
         <div className="wrapx">
-          <div className="shead" style={{ marginBottom: 32 }}>
-            <span className="eyebrow">ขั้นตอน</span>
+          <div className="shead center" style={{ marginBottom: 24 }}>
+            <span className="eyebrow"><Star size={11} /> ขั้นตอน</span>
             <h2>เดินทางกับเราเป็นอย่างไร</h2>
             <p>สี่ขั้นตอนตั้งแต่ทักมาถามครั้งแรกจนถึงวันออกเดินทาง</p>
           </div>
-          <div className="g4">
+          <div className="steps">
             {STEPS.map(([t, d], i) => (
               <div className="step" key={t}>
                 <div className="n">{i + 1}</div>
@@ -122,15 +123,16 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      {umrah && <ServiceBlock index={1} service={umrah} reversed={true} />}
+      {umrah && <ServiceBlock n={2} service={umrah} reversed={true} />}
 
-      {visa && <ServiceBlock index={2} service={visa} reversed={false} />}
+      {visa && <ServiceBlock n={3} service={visa} reversed={false} alt />}
 
       <Band
         title="ยังไม่แน่ใจว่าควรเลือกแบบไหน?"
         lead="ทักมาเล่าให้ฟังได้ เดี๋ยวเราช่วยดูให้ว่าแบบไหนเหมาะกับคุณ"
         btnLabel="ปรึกษาเราทาง LINE"
-        btnHref="/contact"
+        line
+        alt
       />
       <SiteFooter />
     </>

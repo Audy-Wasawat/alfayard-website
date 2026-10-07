@@ -3,6 +3,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import FaqBrowser from "@/components/FaqBrowser";
 import { getFaqCategories, getFaqs } from "@/lib/data";
+import { lineUrl } from "@/lib/site";
 
 export const revalidate = 60;
 
@@ -27,7 +28,7 @@ export default async function FaqPage() {
 
       <section className="sec">
         <div className="wrapx side">
-          <FaqBrowser categories={categories} faqs={faqs} />
+          <FaqBrowser categories={categories} faqs={faqs} lineHref={lineUrl()} />
         </div>
       </section>
 

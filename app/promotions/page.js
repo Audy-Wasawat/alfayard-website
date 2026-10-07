@@ -11,8 +11,13 @@ export const metadata = {
   title: "โปรโมชั่นและแพ็กเกจ | อัล ฟายาร์ด 1441",
 };
 
+// เปิดรับอยู่ขึ้นก่อน ปิดรับแล้วไว้ท้าย
+const statusRank = { open: 0, almost_full: 1, closed: 2 };
+
 export default async function PromotionsPage() {
-  const promos = await getPromotions();
+  const promos = [...(await getPromotions())].sort(
+    (a, b) => (statusRank[a.status] ?? 1) - (statusRank[b.status] ?? 1)
+  );
 
   return (
     <>
@@ -28,13 +33,10 @@ export default async function PromotionsPage() {
 
       <section className="sec">
         <div className="wrapx">
-          <p className="mute sm" style={{ marginBottom: 24 }}>
-            พบ {promos.length} รายการ
-          </p>
           {promos.length > 0 ? (
             <div className="g3">
-              {promos.map((p) => (
-                <PromoCard promo={p} key={p.id} />
+              {promos.map((p, i) => (
+                <PromoCard promo={p} key={p.id} eager={i < 3} />
               ))}
             </div>
           ) : (
@@ -47,7 +49,7 @@ export default async function PromotionsPage() {
         title="อยากได้แพ็กเกจแบบกลุ่มส่วนตัว?"
         lead="รวมกลุ่มกันมาเองได้ เราจัดรอบและราคาให้ตามจำนวนคน"
         btnLabel="คุยกับเราทาง LINE"
-        btnHref="/contact"
+        line
       />
       <SiteFooter />
     </>

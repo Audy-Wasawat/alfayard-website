@@ -34,7 +34,7 @@ export default async function PortfolioPage() {
       />
 
       <section className="sec">
-        <div className="wrapx col" style={{ gap: 48 }}>
+        <div className="wrapx col" style={{ gap: 36 }}>
           {trips.length === 0 && (
             <p className="mute">ยังไม่มีผลงานที่เผยแพร่ในตอนนี้</p>
           )}
@@ -46,8 +46,8 @@ export default async function PortfolioPage() {
                 <h2 className="f28" style={{ whiteSpace: "nowrap" }}>
                   ปี {year}
                 </h2>
-                <div style={{ height: 1, background: "var(--line)", flexGrow: 1 }} />
-                <span className="mute sm" style={{ whiteSpace: "nowrap" }}>
+                <div style={{ height: 1, background: "var(--line)", flexGrow: 1, minWidth: 20 }} />
+                <span className="pill" style={{ whiteSpace: "nowrap" }}>
                   {yearTrips.length} ทริป
                 </span>
               </div>
@@ -66,8 +66,8 @@ export default async function PortfolioPage() {
                 <h2 className="f28" style={{ whiteSpace: "nowrap" }}>
                   ทริปก่อนหน้า
                 </h2>
-                <div style={{ height: 1, background: "var(--line)", flexGrow: 1 }} />
-                <span className="mute sm" style={{ whiteSpace: "nowrap" }}>
+                <div style={{ height: 1, background: "var(--line)", flexGrow: 1, minWidth: 20 }} />
+                <span className="pill" style={{ whiteSpace: "nowrap" }}>
                   {pastTrips.length} ทริป
                 </span>
               </div>

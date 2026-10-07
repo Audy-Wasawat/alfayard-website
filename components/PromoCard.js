@@ -1,42 +1,61 @@
 import Link from "next/link";
 import ImageBox from "./ImageBox";
-import { formatPrice, statusLabel, statusPillClass, typeLabel } from "@/lib/data";
+import { IconCalendar, IconClock, IconArrow } from "./icons";
+import {
+  formatPrice,
+  formatThaiDate,
+  statusLabel,
+  statusPillClass,
+  typeLabel,
+} from "@/lib/data";
 
-export default function PromoCard({ promo }) {
+export default function PromoCard({ promo, eager = false }) {
+  const price = formatPrice(promo.price);
+  const closed = promo.status === "closed";
   return (
-    <article className="card pcard">
+    <Link href={`/promotions/${promo.slug}`} className={`card pcard${closed ? " closed" : ""}`}>
       <ImageBox
+        className="pimg"
         driveId={promo.poster_image_drive_id}
-        width={500}
-        label="โปสเตอร์ทริป"
-        eager
-      />
+        width={600}
+        label={`โปสเตอร์ ${promo.name}`}
+        eager={eager}
+      >
+        <div className="badges">
+          <span className="pill gold">{typeLabel(promo.type)}</span>
+          <span className={statusPillClass(promo.status)}>{statusLabel(promo.status)}</span>
+        </div>
+      </ImageBox>
       <div className="body">
-        <div className="row wrap" style={{ gap: 8 }}>
-          <span className="pill">{typeLabel(promo.type)}</span>
-          <span className={statusPillClass(promo.status)}>
-            {statusLabel(promo.status)}
+        <h3>{promo.name}</h3>
+        <div className="pmeta">
+          {promo.departure_date && (
+            <span>
+              <IconCalendar /> ออกเดินทาง {formatThaiDate(promo.departure_date)}
+            </span>
+          )}
+          {promo.duration_days && (
+            <span>
+              <IconClock w={16} /> {promo.duration_days} วัน
+            </span>
+          )}
+        </div>
+        <div className="pfoot">
+          <div>
+            <span className="price-label">ราคาเริ่มต้น</span>
+            {price ? (
+              <span className="price">
+                ฿{price} <small>/ ท่าน</small>
+              </span>
+            ) : (
+              <span className="price" style={{ fontSize: 20 }}>สอบถามราคา</span>
+            )}
+          </div>
+          <span className="more">
+            รายละเอียด <IconArrow />
           </span>
         </div>
-        <h3>{promo.name}</h3>
-        <p className="mute sm">
-          {promo.duration_days ? `${promo.duration_days} วัน` : "[จำนวนวัน]"}
-          {" · "}
-          {promo.departure_date
-            ? `ออกเดินทาง ${promo.departure_date}`
-            : "ออกเดินทาง [วันที่]"}
-        </p>
-        <div className="price">
-          ฿ {formatPrice(promo.price)} <small>/ ท่าน</small>
-        </div>
-        <Link
-          href={`/promotions/${promo.slug}`}
-          className="btn solid w"
-          style={{ marginTop: 4 }}
-        >
-          ดูรายละเอียด
-        </Link>
       </div>
-    </article>
+    </Link>
   );
 }

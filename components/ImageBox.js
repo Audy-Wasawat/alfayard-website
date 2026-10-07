@@ -1,7 +1,7 @@
 import { driveImageUrl } from "@/lib/images";
 
-// กล่องรูปเดียวใช้ทั้งเว็บ: ถ้ามี driveId แสดงรูปจริงจาก Google Drive thumbnail endpoint
-// ถ้าไม่มี (ยังไม่ได้ sync รูป) แสดงกล่องสีพื้นเป็น placeholder เหมือนตอนออกแบบ
+// กล่องรูปเดียวใช้ทั้งเว็บ: ถ้ามี driveId แสดงรูปจริง (ผ่าน /api/img) ถ้าไม่มีแสดงกล่องสีพื้นแทน
+// children = ของที่วางซ้อนบนรูป (เช่น ป้ายสถานะบนโปสเตอร์)
 export default function ImageBox({
   driveId,
   src: localSrc,
@@ -10,16 +10,24 @@ export default function ImageBox({
   label = "รูป",
   eager = false,
   style,
+  children,
 }) {
   const src = localSrc || driveImageUrl(driveId, width);
   return (
     <div className={`img ${className}`} style={style}>
       {src ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt={label} loading={eager ? "eager" : "lazy"} />
+        <img
+          src={src}
+          alt={label}
+          loading={eager ? "eager" : "lazy"}
+          decoding="async"
+          fetchPriority={eager ? "high" : undefined}
+        />
       ) : (
-        label
+        <span>{label}</span>
       )}
+      {children}
     </div>
   );
 }
