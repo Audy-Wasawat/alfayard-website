@@ -1,11 +1,11 @@
 # Keeps the Supabase Free-plan project from being auto-paused for inactivity.
 # Supabase only counts requests that go through the project's API, so this
-# calls the REST API (a one-row read) every 3 days.
+# calls the REST API (a one-row read) every 6 hours.
 name: Supabase keep-alive
 
 on:
   schedule:
-    - cron: "17 3 */3 * *" # 03:17 UTC (11:17 China time) on every 3rd day of the month
+    - cron: "17 */6 * * *" # every 6 hours (4 times a day)
   workflow_dispatch: {}
 
 jobs:
